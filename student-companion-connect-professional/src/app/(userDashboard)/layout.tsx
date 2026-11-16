@@ -16,7 +16,7 @@ export default function RootLayout({
     <main>
       <UserHeader />
       <section className="container mx-auto flex justify-center">
-        <div className="w-full max-w-xl my-5 px-2">{children}</div>
+        <div className="w-full max-w-xl md:max-w-3xl lg:max-w-5xl my-4 sm:my-6 px-3 sm:px-6">{children}</div>
       </section>
       <UserFooter />
     </main>

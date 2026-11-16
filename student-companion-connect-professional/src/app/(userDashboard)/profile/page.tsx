@@ -259,22 +259,20 @@ export default function UserProfile() {
                   </span>
                 </div>
 
-                <p className="text-sm text-slate-600 font-medium flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                  <span className="flex items-center gap-1 text-slate-700">
-                    <svg className="size-4 text-orange fill-current" viewBox="0 0 20 20">
+                <div className="text-xs sm:text-sm text-slate-600 font-medium flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2.5">
+                  <span className="inline-flex items-center gap-1 text-slate-700 bg-slate-100 sm:bg-transparent px-2 sm:px-0 py-0.5 rounded-full">
+                    <svg className="size-3.5 sm:size-4 text-orange fill-current" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                     {location}, Germany
                   </span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1 text-slate-700">
+                  <span className="inline-flex items-center gap-1 text-slate-700 bg-slate-100 sm:bg-transparent px-2 sm:px-0 py-0.5 rounded-full">
                     🇮🇳 {locationIndia}
                   </span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1 text-slate-700">
+                  <span className="inline-flex items-center gap-1 text-slate-700 bg-slate-100 sm:bg-transparent px-2 sm:px-0 py-0.5 rounded-full">
                     🗣️ {language}
                   </span>
-                </p>
+                </div>
 
                 {company && (
                   <p className="text-xs text-slate-500 font-medium">
@@ -446,8 +444,8 @@ export default function UserProfile() {
               </button>
             </div>
 
-            {/* LIVE CARD PREVIEW */}
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-3">
+            {/* LIVE CARD PREVIEW (Desktop Companion) */}
+            <div className="hidden lg:block bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   Search Card Preview

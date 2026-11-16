@@ -14,7 +14,7 @@ export default function UserHeader() {
   const [location, setLocation] = useState<any>("");
   const [locPop, setLocPop] = useState(false);
   const [authToken, setAuthToken] = useState<any>("");
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(true);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -36,27 +36,29 @@ export default function UserHeader() {
         },
       };
 
-      const res: any = await fetch(endpoint, options);
-      const rInfo: UserInfo = await res.json();
+      try {
+        const res: any = await fetch(endpoint, options);
+        const rInfo: UserInfo = await res.json();
 
-      if (res.status == 200) {
-        setStatus(rInfo.status);
-      }
+        if (res.status == 200) {
+          if (rInfo.status === false) setStatus(false);
+          else setStatus(true);
+        }
+      } catch {}
     };
 
     if (authToken) getOwnerData();
   }, [authToken]);
 
   useEffect(() => {
-    if (localStorage.getItem("location")) {
-      const loc = localStorage.getItem("location");
-
-      if (loc != undefined || loc != "") {
-        setLocation(loc);
-        setLocPop(false);
-      } else setLocPop(true);
+    const loc = localStorage.getItem("location");
+    if (loc && loc !== "") {
+      setLocation(loc);
+      setLocPop(false);
     } else {
-      setLocPop(true);
+      setLocation("Stuttgart");
+      localStorage.setItem("location", "Stuttgart");
+      setLocPop(false);
     }
   }, []);
 
