@@ -1,0 +1,372 @@
+"use client";
+
+import Notify, { showToast } from "@/components/notify";
+import { REvent } from "@/models/event.model";
+import locList from "@/db/location.json";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
+export default function EditEvent({ params }: { params: { id: string } }) {
+  const [authToken, setAuthToken] = useState<any>("");
+  const [usrGender, setUsrGender] = useState<string>("Male");
+  const router = useRouter();
+  const upTypes: string[] = ["jpg", "jpeg", "png", "gif", "webp"];
+  const { register, setValue, watch, handleSubmit, reset } = useForm<REvent>({
+    defaultValues: {
+      bookedSeats: "0",
+      womenOnly: false,
+    },
+  });
+
+  useEffect(() => {
+    if (localStorage.getItem("LogInSCCTkn")) {
+      setAuthToken(localStorage.getItem("LogInSCCTkn"));
+    }
+  }, []);
+
+  useEffect(() => {
+    const getRNData = async () => {
+      const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}user`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authToken,
+        },
+      };
+
+      const res: any = await fetch(endpoint, options);
+      const rInfo: any = await res.json();
+
+      if (res.status == 200) {
+        setValue("rName", rInfo.fullName);
+        // setValue("womenOnly", rInfo.womenOnly);
+        setUsrGender(rInfo.gender);
+      }
+    };
+
+    const getRData = async () => {
+      const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}post/${params.id}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authToken,
+        },
+      };
+
+      const res: any = await fetch(endpoint, options);
+      const rInfo: REvent = await res.json();
+
+      if (res.status == 200) {
+        reset(rInfo);
+        getRNData();
+      }
+    };
+
+    if (authToken) getRData();
+  }, [authToken, reset, params.id, setValue]);
+
+  const getImgPath = (img: string) => {
+    return `${process.env.NEXT_PUBLIC_API_PATH}uploads/${img}`;
+  };
+
+  const addImg = async (e: any) => {
+    const fileName = e.target.files[0].name.split(".");
+
+    if (!upTypes.find((x) => x === fileName[1])) {
+      showToast("File Must Be jpg/jpeg/png/gif/webp!", "error");
+      return false;
+    }
+
+    if (e.target.files[0].size >= 4148576) {
+      showToast("Image Must Be Under 4 MB!", "error");
+      return false;
+    }
+
+    try {
+      const uFrm = new FormData();
+
+      const fName = fileName[0]
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+
+      uFrm.append(
+        "eventImg",
+        e.target.files[0],
+        fName + "-" + Date.now().toString() + "." + fileName[1]
+      );
+      uFrm.append("fileType", fileName[1]);
+
+      const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}post/upload`;
+      const options = {
+        method: "POST",
+        headers: {
+          authorization: authToken,
+        },
+        body: uFrm,
+      };
+
+      showToast("Image Uploading...", "info");
+
+      const res = await fetch(endpoint, options);
+      const data = await res.json();
+
+      if (res.status == 200) {
+        setValue("eventImg", data);
+        showToast("Image Uploaded Successfully!", "success");
+      } else showToast("Failed to Upload Image!", "error");
+    } catch (error) {
+      showToast(error, "error");
+    }
+  };
+
+  const onSubmit = async (data: REvent) => {
+    const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}post/edit/${params.id}`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: authToken,
+      },
+      body: JSON.stringify(data),
+    };
+
+    try {
+      const res = await fetch(endpoint, options);
+      const msg = await res.json();
+
+      if (res.status == 202) {
+        showToast(msg, "success");
+        router.push("/events");
+      } else {
+        showToast("Failed to Update Post Data!", "error");
+      }
+    } catch (error) {
+      showToast(error, "error");
+    }
+  };
+  return (
+    <section className="container mx-auto">
+      <Notify />
+      <div
+        className={`flex justify-center items-center`}
+        style={{ minHeight: "calc(100vh - 60px)" }}
+      >
+        <aside className="bg-lightGray w-full border-gray border rounded p-6 md:p-12">
+          <h1 className="text-black font-medium text-4xl uppercase text-center">
+            Update{" "}
+            {watch("type") == "post" && (
+              <span className="text-orange">Post</span>
+            )}
+            {watch("type") == "offer" && (
+              <span className="text-orange">Offer</span>
+            )}
+            {watch("type") == "announcement" && (
+              <span className="text-orange">Announcement</span>
+            )}
+          </h1>
+
+          <form>
+            <div className="my-3 text-center">
+              <input
+                type="file"
+                id="rLogo"
+                className="hidden"
+                onChange={(e) => addImg(e)}
+              />
+              <label
+                htmlFor="rLogo"
+                className="w-full h-64 border border-gray rounded-sm inline-block bg-center bg-no-repeat bg-cover"
+                style={{
+                  backgroundImage: `url(${getImgPath(watch("eventImg"))})`,
+                }}
+              >
+                <span className="bg-gray bg-opacity-10 rounded-sm hover:bg-opacity-50 w-full h-full flex justify-center items-center transition cursor-pointer">
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-orange w-10 h-10"
+                  >
+                    <g>
+                      <g id="Workspace">
+                        <rect
+                          fill="none"
+                          stroke="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17,10a3.1,3.1,0,0,0-.54.05,4.48,4.48,0,0,0-8.92,0A3.1,3.1,0,0,0,7,10a3,3,0,0,0,0,6H17a3,3,0,0,0,0-6Z"
+                        />
+                        <polyline
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          points="10.5 11.5 12 10 13.5 11.5"
+                        />
+                        <line
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          x1="12"
+                          x2="12"
+                          y1="10"
+                          y2="14"
+                        />
+                      </g>
+                    </g>
+                  </svg>
+                </span>
+              </label>
+              <h4 className="uppercase text-black font-light mt-1">
+                Upload {watch("type") == "post" && <>Post</>}
+                {watch("type") == "offer" && <>Offer</>}
+                {watch("type") == "announcement" && <>Announcement</>} Image
+              </h4>
+            </div>
+            <div className="my-3">
+              <h4 className="uppercase text-black font-light mb-1">
+                What You Want to Create:
+              </h4>
+              <select
+                {...register("type", { required: true })}
+                className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+              >
+                <option value="post">Post</option>
+                <option value="offer">Offer</option>
+                <option value="announcement">Announcement</option>
+              </select>
+            </div>
+            <div className="my-3">
+              <h4 className="uppercase text-black font-light mb-1">
+                {watch("type") == "post" && <>Post</>}
+                {watch("type") == "offer" && <>Offer</>}
+                {watch("type") == "announcement" && <>Announcement</>} Name
+              </h4>
+              <input
+                type="text"
+                className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                {...register("eventName", { required: true })}
+              />
+            </div>
+            <div className="my-3">
+              <h4 className="uppercase text-black font-light mb-1">
+                Description
+              </h4>
+              <textarea
+                className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                {...register("description", { required: true })}
+              ></textarea>
+            </div>
+
+            <div className="my-3">
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <h4 className="uppercase text-black font-light mb-1">Date</h4>
+                  <input
+                    type="date"
+                    className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                    {...register("date", { required: true })}
+                  />
+                </div>
+                <div className="flex-1">
+                  <h4 className="uppercase text-black font-light mb-1">Time</h4>
+                  <input
+                    type="time"
+                    className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                    {...register("time", { required: true })}
+                  />
+                </div>
+              </div>
+            </div>
+            {watch("type") != "announcement" && (
+              <div className="my-3">
+                <h4 className="uppercase text-black font-light mb-1">
+                  Duration
+                </h4>
+                <input
+                  type="text"
+                  className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                  placeholder="20hrs"
+                  {...register("duration", { required: true })}
+                />
+              </div>
+            )}
+            <div className="my-3">
+              <h4 className="uppercase text-black font-light mb-1">Location</h4>
+              <input
+                type="text"
+                disabled
+                className="w-full bg-lDGray border border-gray text-base rounded outline-none px-3 py-2"
+                {...register("location", { required: true })}
+              />
+            </div>
+
+            <div className="my-3">
+              {watch("type") != "announcement" && (
+                <div className="flex gap-3">
+                  <div className="flex-1">
+                    <h4 className="uppercase text-black font-light mb-1">
+                      Price
+                    </h4>
+                    <input
+                      type="text"
+                      className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                      placeholder="$20"
+                      {...register("price", { required: true })}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="uppercase text-black font-light mb-1">
+                      Number Of Seats
+                    </h4>
+                    <input
+                      type="text"
+                      className="w-full bg-white border border-gray text-base rounded outline-none px-3 py-2"
+                      placeholder="20"
+                      {...register("seats", { required: true })}
+                    />
+                  </div>
+                </div>
+              )}
+              {usrGender == "Female" && (
+                <div className="my-3">
+                  <label className="uppercase text-black font-light flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      {...register("womenOnly")}
+                      className="mr-2"
+                    />
+                    Only Visible to Women
+                  </label>
+                </div>
+              )}
+            </div>
+            <button
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+              className="w-full mt-2 bg-orange py-2 px-3 rounded border-none transition font-medium text-base text-white hover:text-black"
+            >
+              Update
+            </button>
+            <p className="text-center mt-3 text-sm">
+              <Link
+                href="/events"
+                className="text-black hover:text-orange no-underline"
+              >
+                &larr; Back to List
+              </Link>
+            </p>
+          </form>
+        </aside>
+      </div>
+    </section>
+  );
+}

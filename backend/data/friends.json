@@ -1,0 +1,24 @@
+[
+  {
+    "fromUsrId": "47179289c341b30ec9fe7172",
+    "fromUsrNm": "Rahul Verma",
+    "fromUsrImg": "avatar2.jpg",
+    "toUsrId": "5723b4ab42e0cdecd8ec50db",
+    "toUsrNm": "Student Stuttgart",
+    "toUsrImg": "default-avatar.jpg",
+    "status": "Accepted",
+    "createdAt": "2026-11-16T21:04:42.592Z",
+    "_id": "51a5986bf2cde0fed358c7dc"
+  },
+  {
+    "fromUsrId": "1e44a05b518cf0922f22acd7",
+    "fromUsrNm": "Priya Sharma",
+    "fromUsrImg": "avatar1.jpg",
+    "toUsrId": "5723b4ab42e0cdecd8ec50db",
+    "toUsrNm": "Student Stuttgart",
+    "toUsrImg": "default-avatar.jpg",
+    "status": "Accepted",
+    "createdAt": "2026-11-16T21:05:30.688Z",
+    "_id": "b4bb478e4eb134207535dea1"
+  }
+]

@@ -1,0 +1,29 @@
+import BzProfileTab from "@/components/bzProfileTab";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sync City Business",
+  description: "Sync City Business",
+};
+
+export default function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { usrId: string };
+}) {
+  return (
+    <>
+      <BzProfileTab
+        rId={params.usrId}
+        offerLink={`/user/${params.usrId}/business`}
+        photoLink={`/user/${params.usrId}/business/menus`}
+        infoLink={`/user/${params.usrId}/business/info`}
+        calenderLink={`/user/${params.usrId}/business/calender`}
+        storeLink={`/user/${params.usrId}/business/store`}
+      />
+      {children}
+    </>
+  );
+}

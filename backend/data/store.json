@@ -1,0 +1,54 @@
+[
+  {
+    "rId": "hub-1",
+    "proName": "Official Campus Companion Hoodie",
+    "category": "Apparel",
+    "location": "Berlin",
+    "qty": "25",
+    "price": "29.99",
+    "discount": "10",
+    "details": "Comfortable organic cotton hoodie with embroidered campus logo, unisex fit.",
+    "status": true,
+    "_id": "8a3c1bbab078d3dd64f26873",
+    "createdAt": "2026-11-16T18:05:40.690Z"
+  },
+  {
+    "rId": "hub-2",
+    "proName": "German Grammar & Vocabulary Study Guide (A1-B2)",
+    "category": "Books",
+    "location": "Berlin",
+    "qty": "40",
+    "price": "14.50",
+    "discount": "0",
+    "details": "Concise quick-reference guide designed specifically for international students.",
+    "status": true,
+    "_id": "245223afeb742f8a4e4599da",
+    "createdAt": "2026-11-16T18:05:40.690Z"
+  },
+  {
+    "rId": "hub-1",
+    "proName": "Ergonomic USB-C Desk Lamp with Wireless Charging",
+    "category": "Electronics",
+    "location": "Berlin",
+    "qty": "15",
+    "price": "24.99",
+    "discount": "15",
+    "details": "Multi-temperature LED desk lamp with fast phone charging base, ideal for dorm desks.",
+    "status": true,
+    "_id": "7dacadf679e5898421e268fe",
+    "createdAt": "2026-11-16T18:05:40.690Z"
+  },
+  {
+    "rId": "r-1794853336255",
+    "proName": "University of Stuttgart Premium Campus Hoodie",
+    "category": "Apparel",
+    "location": "Stuttgart",
+    "price": "34.99",
+    "discount": "15",
+    "qty": "50",
+    "details": "Heavyweight winter campus hoodie featuring Stuttgart city coordinates and university crest. 100% organic cotton, unisex fit.",
+    "status": true,
+    "createdAt": "2026-11-16T18:22:16.256Z",
+    "_id": "96594eb9a4b96a1dabe9173e"
+  }
+]

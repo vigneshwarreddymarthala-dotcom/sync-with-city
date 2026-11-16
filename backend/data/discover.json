@@ -1,0 +1,38 @@
+[
+  {
+    "dName": "Mercedes-Benz Museum & Tech Experience",
+    "imgPath": [
+      "default-avatar.jpg"
+    ],
+    "location": "Stuttgart",
+    "date": "2026-12-30",
+    "time": "18:00",
+    "link": "https://www.mercedes-benz.com/museum",
+    "_id": "eebe58781c4b5b2dc60d1657",
+    "createdAt": "2026-11-16T21:58:51.394Z"
+  },
+  {
+    "dName": "Wilhelma Zoo & Botanical Garden",
+    "imgPath": [
+      "default-avatar.jpg"
+    ],
+    "location": "Stuttgart",
+    "date": "2026-12-30",
+    "time": "18:00",
+    "link": "https://www.wilhelma.de",
+    "_id": "179bb95aee755a8a5e4b43b1",
+    "createdAt": "2026-11-16T21:58:51.398Z"
+  },
+  {
+    "dName": "Stuttgart City Library (Stadtbibliothek)",
+    "imgPath": [
+      "default-avatar.jpg"
+    ],
+    "location": "Stuttgart",
+    "date": "2026-12-30",
+    "time": "18:00",
+    "link": "https://stadtbibliothek-stuttgart.de",
+    "_id": "02a78b61eb417026767579c2",
+    "createdAt": "2026-11-16T21:58:51.398Z"
+  }
+]

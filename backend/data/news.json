@@ -1,0 +1,32 @@
+[
+  {
+    "rId": "hub-1",
+    "newsTitle": "Deutschlandticket & Semester Ticket Updates for 2026",
+    "category": "Campus News",
+    "location": "Berlin",
+    "description": "Everything international and local students need to know about semester transit passes and regional upgrades across Germany.",
+    "link": "https://www.studentenwerk-berlin.de",
+    "createdAt": "2026-11-16T18:05:40.690Z",
+    "_id": "d93a9728376820153aee452e"
+  },
+  {
+    "rId": "hub-2",
+    "newsTitle": "Working Student (Werkstudent) Jobs: Top Berlin Openings",
+    "category": "Career",
+    "location": "Berlin",
+    "description": "A curated roundup of flexible 20-hour working student positions in software, data analytics, and marketing in Berlin startups.",
+    "link": "https://berlinstartupjobs.com",
+    "createdAt": "2026-11-16T18:05:40.690Z",
+    "_id": "196f581f7e0ff4bdf1154f1f"
+  },
+  {
+    "rId": "hub-1",
+    "newsTitle": "DAAD & Germany Scholarship Application Windows Open",
+    "category": "Scholarships",
+    "location": "Berlin",
+    "description": "Deadlines, requirements, and tips for applying for Germany scholarship programs (Deutschlandstipendium) for 2026/2027.",
+    "link": "https://www.daad.de",
+    "createdAt": "2026-11-16T18:05:40.690Z",
+    "_id": "7502a28b3ed860493c4abec0"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "proId": "hoodie-1",
+    "proName": "University of Stuttgart Premium Campus Hoodie",
+    "category": "Apparel",
+    "price": "29.99",
+    "qty": "1",
+    "yrName": "Maria Garcia",
+    "email": "maria.stuttgart@gmail.com",
+    "status": "Confirmed",
+    "payStatus": "Paid",
+    "paymentOpt": "Card",
+    "createdAt": "2026-11-16T19:04:54.982Z",
+    "_id": "51763b3f67a249f85cc9e24d"
+  },
+  {
+    "paymentOpt": "Paid",
+    "status": "Confirmed",
+    "payStatus": "Paid",
+    "yrName": "Student Stuttgart",
+    "email": "student.stuttgart@gmail.com",
+    "phNo": "+49 176 12345678",
+    "rId": "stuttgart-store-1",
+    "proId": "hoodie-1",
+    "proName": "Apparel",
+    "category": "Apparel",
+    "qty": "1",
+    "price": "34.99",
+    "disPrice": "29.99",
+    "createdAt": "2026-11-16T19:29:06.930Z",
+    "_id": "36986a60ad01270ebbffdd1b"
+  },
+  {
+    "paymentOpt": "Paid",
+    "status": "Confirmed",
+    "payStatus": "Paid",
+    "yrName": "Student Stuttgart",
+    "email": "student.stuttgart@gmail.com",
+    "phNo": "+49 176 12345678",
+    "rId": "hub-2",
+    "proId": "245223afeb742f8a4e4599da",
+    "proName": "Books",
+    "category": "Books",
+    "qty": "1",
+    "price": "14.50",
+    "disPrice": "0",
+    "createdAt": "2026-11-16T19:29:06.933Z",
+    "_id": "be1ca2872d00cbd810391762"
+  }
+]

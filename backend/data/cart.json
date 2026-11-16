@@ -1,0 +1,24 @@
+[
+  {
+    "proId": "hoodie-1",
+    "proName": "University of Stuttgart Premium Campus Hoodie",
+    "category": "Apparel",
+    "price": "34.99",
+    "disPrice": "29.99",
+    "qty": "1",
+    "rId": "stuttgart-store-1",
+    "_id": "ec4067fb61999f17a5dcf451",
+    "createdAt": "2026-11-16T19:04:54.977Z"
+  },
+  {
+    "proId": "245223afeb742f8a4e4599da",
+    "rId": "hub-2",
+    "proName": "German Grammar & Vocabulary Study Guide (A1-B2)",
+    "category": "Books",
+    "qty": "1",
+    "price": "14.50",
+    "disPrice": "0",
+    "_id": "35e9615bf41ca9777fe9686d",
+    "createdAt": "2026-11-16T19:28:53.991Z"
+  }
+]

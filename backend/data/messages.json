@@ -1,0 +1,25 @@
+[
+  {
+    "cId": "conv-d0a8096aace4323c606a93e9",
+    "senderId": "138a7cf9d53af4ee2c3a4194",
+    "senderName": "Maria Garcia",
+    "message": "Hi Alex! Excited for the 2-person coding session at Stuttgart!",
+    "createdAt": "2026-11-16T18:26:46.123Z",
+    "_id": "d18c3ee67a26df09d6d68e49"
+  },
+  {
+    "cId": "conv-d0a8096aace4323c606a93e9",
+    "senderId": "40f35e50eb77496423a8175e",
+    "senderName": "Alex (Organizer)",
+    "message": "Awesome Maria, see you at Schlossplatz at 3 PM! Bring your laptop.",
+    "createdAt": "2026-11-16T18:26:46.125Z",
+    "_id": "2991fa94f68c631b0ebc0241"
+  },
+  {
+    "cId": "conv-4bb38e369a644d8627d14824",
+    "senderName": "Emma Watson",
+    "message": "Looking forward to meeting everyone!",
+    "createdAt": "2026-11-16T18:52:44.454Z",
+    "_id": "6a02b51a51309733a5f87813"
+  }
+]

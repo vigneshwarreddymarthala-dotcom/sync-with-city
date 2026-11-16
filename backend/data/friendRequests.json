@@ -1,0 +1,46 @@
+[
+  {
+    "fromUsrId": "1e44a05b518cf0922f22acd7",
+    "fromUsrNm": "Priya Sharma",
+    "fromUsrImg": "avatar1.jpg",
+    "toUsrId": "5723b4ab42e0cdecd8ec50db",
+    "toUsrNm": "Student Stuttgart",
+    "toUsrImg": "default-avatar.jpg",
+    "status": "Accepted",
+    "createdAt": "2026-11-16T21:04:42.592Z",
+    "_id": "32a762f10b900f39acef9e57",
+    "updatedAt": "2026-11-16T21:05:30.687Z"
+  },
+  {
+    "fromUsrId": "5723b4ab42e0cdecd8ec50db",
+    "fromUsrNm": "Student Stuttgart",
+    "fromUsrImg": "default-avatar.jpg",
+    "toUsrId": "8347045ab27e9196215bd9a9",
+    "toUsrNm": "Ananya Reddy",
+    "toUsrImg": "avatar3.jpg",
+    "status": "Pending",
+    "createdAt": "2026-11-16T21:06:03.055Z",
+    "_id": "77024e5d01d4916c4ca5cbff"
+  },
+  {
+    "fromUsrId": "5723b4ab42e0cdecd8ec50db",
+    "fromUsrNm": "Student Stuttgart",
+    "fromUsrImg": "default-avatar.jpg",
+    "toUsrId": "247c307eb88c06c90c000563",
+    "toUsrNm": "vignesh",
+    "status": "Pending",
+    "createdAt": "2026-11-16T21:13:27.777Z",
+    "_id": "49fd3adfcc0a4f2c4ba67f24"
+  },
+  {
+    "fromUsrId": "5723b4ab42e0cdecd8ec50db",
+    "fromUsrNm": "Student Stuttgart",
+    "fromUsrImg": "default-avatar.jpg",
+    "toUsrId": "4b6a4dfc4ba926126a3e9162",
+    "toUsrNm": "Sai Teja Goud",
+    "toUsrImg": "avatar1.jpg",
+    "status": "Pending",
+    "createdAt": "2026-11-16T22:18:55.520Z",
+    "_id": "2f49a601a4c70c478e9bf079"
+  }
+]
