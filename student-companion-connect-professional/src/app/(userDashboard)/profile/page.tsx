@@ -356,93 +356,93 @@ export default function UserProfile() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* LEFT COLUMN: NAVIGATION TABS */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-2 shadow-sm space-y-1">
+            <div className="bg-white rounded-2xl border border-slate-200/80 p-2 shadow-sm flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 scrollbar-none">
               <button
                 type="button"
                 onClick={() => setActiveTab("identity")}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
                   activeTab === "identity"
                     ? "bg-orange text-white shadow-sm"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <svg className="size-5 fill-current" viewBox="0 0 20 20">
+                  <svg className="size-5 fill-current shrink-0" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                   </svg>
                   <span>Student Identity</span>
                 </div>
-                <span className="text-xs opacity-75">Basic Info</span>
+                <span className="text-xs opacity-75 hidden sm:inline">Basic Info</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab("heritage")}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
                   activeTab === "heritage"
                     ? "bg-orange text-white shadow-sm"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg">🇮🇳</span>
+                  <span className="text-lg shrink-0">🇮🇳</span>
                   <span>Indian Heritage</span>
                 </div>
-                <span className="text-xs opacity-75">State & Tongue</span>
+                <span className="text-xs opacity-75 hidden sm:inline">State & Tongue</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab("bio")}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
                   activeTab === "bio"
                     ? "bg-orange text-white shadow-sm"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <svg className="size-5 fill-current" viewBox="0 0 20 20">
+                  <svg className="size-5 fill-current shrink-0" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
                   </svg>
                   <span>Bio & Passions</span>
                 </div>
-                <span className="text-xs opacity-75">About & Hobbies</span>
+                <span className="text-xs opacity-75 hidden sm:inline">About & Hobbies</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab("social")}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
                   activeTab === "social"
                     ? "bg-orange text-white shadow-sm"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <svg className="size-5 fill-current" viewBox="0 0 20 20">
+                  <svg className="size-5 fill-current shrink-0" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                   <span>Contact & Socials</span>
                 </div>
-                <span className="text-xs opacity-75">Connect Links</span>
+                <span className="text-xs opacity-75 hidden sm:inline">Connect Links</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab("privacy")}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
+                className={`shrink-0 lg:w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
                   activeTab === "privacy"
                     ? "bg-orange text-white shadow-sm"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <svg className="size-5 fill-current" viewBox="0 0 20 20">
+                  <svg className="size-5 fill-current shrink-0" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
                   <span>Visibility & Privacy</span>
                 </div>
-                <span className="text-xs opacity-75">Search Rules</span>
+                <span className="text-xs opacity-75 hidden sm:inline">Search Rules</span>
               </button>
             </div>
 
