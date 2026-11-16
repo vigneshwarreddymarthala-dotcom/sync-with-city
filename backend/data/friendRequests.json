@@ -18,9 +18,10 @@
     "toUsrId": "8347045ab27e9196215bd9a9",
     "toUsrNm": "Ananya Reddy",
     "toUsrImg": "avatar3.jpg",
-    "status": "Pending",
+    "status": "Accepted",
     "createdAt": "2026-11-16T21:06:03.055Z",
-    "_id": "77024e5d01d4916c4ca5cbff"
+    "_id": "77024e5d01d4916c4ca5cbff",
+    "updatedAt": "2026-11-16T22:47:11.692Z"
   },
   {
     "fromUsrId": "5723b4ab42e0cdecd8ec50db",
@@ -42,5 +43,16 @@
     "status": "Pending",
     "createdAt": "2026-11-16T22:18:55.520Z",
     "_id": "2f49a601a4c70c478e9bf079"
+  },
+  {
+    "fromUsrId": "5723b4ab42e0cdecd8ec50db",
+    "fromUsrNm": "Student Stuttgart",
+    "fromUsrImg": "default-avatar.jpg",
+    "toUsrId": "4b6a4dfc4ba926126a3e9162",
+    "toUsrNm": "Sai Teja Goud",
+    "toUsrImg": "avatar1.jpg",
+    "status": "Pending",
+    "createdAt": "2026-11-16T22:47:11.685Z",
+    "_id": "2e8f6e6324fcdd1453870314"
   }
 ]

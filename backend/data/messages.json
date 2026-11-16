@@ -21,5 +21,21 @@
     "message": "Looking forward to meeting everyone!",
     "createdAt": "2026-11-16T18:52:44.454Z",
     "_id": "6a02b51a51309733a5f87813"
+  },
+  {
+    "cId": "5f32553ac17d4ec69838022b",
+    "senderId": "5723b4ab42e0cdecd8ec50db",
+    "senderName": "Student Stuttgart",
+    "message": "Namaste Sai Teja! Welcome to Stuttgart University!",
+    "createdAt": "2026-11-16T22:47:11.698Z",
+    "_id": "6925a2d985ecf7c6655884b9"
+  },
+  {
+    "cId": "5f32553ac17d4ec69838022b",
+    "senderId": "4b6a4dfc4ba926126a3e9162",
+    "senderName": "Sai Teja Goud",
+    "message": "Namaste! Thank you so much, let us catch up at the campus cafeteria!",
+    "createdAt": "2026-11-16T22:47:11.700Z",
+    "_id": "c8daa9b0cb61a34d1463ed96"
   }
 ]

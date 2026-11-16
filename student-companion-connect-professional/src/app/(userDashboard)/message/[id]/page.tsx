@@ -132,6 +132,7 @@ export default function RMessages({ params }: { params: { id: string } }) {
   };
 
   const sendMsg = async (data: Messages) => {
+    if (!data.message || !data.message.trim()) return;
     try {
       const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}message/user`;
       const options = {
@@ -140,7 +141,12 @@ export default function RMessages({ params }: { params: { id: string } }) {
           "Content-Type": "application/json",
           authorization: authToken,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          cId: data.cId || params.id,
+          senderId: usrId,
+          senderName: data.senderName || (cnv?.rId == usrId ? cnv?.rName : cnv?.usrName),
+        }),
       };
 
       const res: any = await fetch(endpoint, options);
@@ -210,6 +216,13 @@ export default function RMessages({ params }: { params: { id: string } }) {
             <form className="flex gap-2 w-full max-w-xl">
               <textarea
                 {...register("message")}
+                placeholder="Type a message... (Press Enter to send)"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(sendMsg)();
+                  }
+                }}
                 className="h-12 flex-1 p-2 outline-none border-orange border-2 rounded-md resize-none"
               ></textarea>
               <button

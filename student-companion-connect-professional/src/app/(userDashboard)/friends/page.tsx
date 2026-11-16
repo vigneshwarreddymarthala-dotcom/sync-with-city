@@ -67,9 +67,13 @@ const MyFriends = () => {
     return `${process.env.NEXT_PUBLIC_API_PATH}uploads/${img}`;
   };
 
-  const startConversation = async (i: number) => {
+  const startConversation = async (friend: friendship) => {
     try {
       const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}conversation/restaurant`;
+      const isFromMe = friend.fromUsrId == myInfo?._id;
+      const targetUsrId = isFromMe ? friend.toUsrId : friend.fromUsrId;
+      const targetUsrNm = isFromMe ? friend.toUsrNm : friend.fromUsrNm;
+
       const options = {
         method: "POST",
         headers: {
@@ -77,15 +81,9 @@ const MyFriends = () => {
           authorization: authToken,
         },
         body: JSON.stringify({
-          usrId:
-            myFriends[i].fromUsrId == myInfo?._id
-              ? myFriends[i].toUsrId
-              : myFriends[i].fromUsrId,
-          rName: myInfo?.fullName,
-          usrName:
-            myFriends[i].fromUsrId == myInfo?._id
-              ? myFriends[i].toUsrNm
-              : myFriends[i].fromUsrNm,
+          usrId: targetUsrId,
+          rName: myInfo?.fullName || "Student",
+          usrName: targetUsrNm,
         }),
       };
 
@@ -102,114 +100,97 @@ const MyFriends = () => {
     }
   };
 
+  const activeFriends = Array.isArray(myFriends)
+    ? myFriends.filter((bk: friendship) => bk.toUsrId == myInfo?._id || bk.fromUsrId == myInfo?._id)
+    : [];
+
   return (
     <>
       <Notify />
-      {myFriends.length != 0 && (
-        <ul className="m-0 p-0 list-none">
-          {myFriends.map((bk: friendship, i: number) => {
+      {activeFriends.length != 0 && (
+        <ul className="m-0 p-0 list-none space-y-3">
+          {activeFriends.map((bk: friendship, i: number) => {
+            const isToMe = bk.toUsrId == myInfo?._id;
+            const friendName = isToMe ? bk.fromUsrNm : bk.toUsrNm;
+            const friendId = isToMe ? bk.fromUsrId : bk.toUsrId;
+            const friendImg = isToMe ? bk.fromUsrImg : bk.toUsrImg;
+
             return (
               <li
                 key={i}
-                className="bg-gray bg-opacity-35 shadow-md text-black hover:bg-lDGray transition px-4 md:px-8 py-5 rounded-md flex items-center gap-6 my-3 cursor-pointer"
+                className="bg-white border border-slate-200/90 hover:border-orange/50 shadow-sm hover:shadow-md transition-all px-5 py-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
-                {bk.toUsrId == myInfo?._id && (
-                  <>
-                    {bk.fromUsrImg && (
-                      <Image
-                        src={getImgPath(bk.fromUsrImg)}
-                        alt={bk.fromUsrNm}
-                        width={100}
-                        height={100}
-                        className="size-24 object-cover object-center rounded-md"
-                      />
-                    )}
-                    <div>
-                      <h3 className="font-semibold text-2xl">{bk.fromUsrNm}</h3>
-                      <h4 className="text-sm font-medium text-black">
-                        Status: {bk.status}
-                      </h4>
-
-                      <div className="flex gap-3 mt-2">
-                        <Link
-                          href={`/friends/user/${bk.fromUsrId}`}
-                          className="text-orange font-medium"
-                        >
-                          View Profile
-                        </Link>
-
-                        <a
-                          onClick={() => startConversation(i)}
-                          className="text-orange hover:text-black transition cursor-pointer"
-                        >
-                          Message
-                        </a>
-                      </div>
+                <div className="flex items-center gap-4">
+                  {friendImg && friendImg !== "default-avatar.jpg" ? (
+                    <Image
+                      src={getImgPath(friendImg)}
+                      alt={friendName}
+                      width={64}
+                      height={64}
+                      className="size-14 object-cover object-center rounded-full border border-slate-200 shadow-sm"
+                    />
+                  ) : (
+                    <div className="size-14 rounded-full bg-orange/10 border border-orange/20 text-orange font-bold text-xl flex items-center justify-center shadow-sm">
+                      {friendName ? friendName.charAt(0).toUpperCase() : "U"}
                     </div>
-                  </>
-                )}
-                {bk.fromUsrId == myInfo?._id && (
-                  <>
-                    {bk.toUsrImg && (
-                      <Image
-                        src={getImgPath(bk.toUsrImg)}
-                        alt={bk.toUsrNm}
-                        width={100}
-                        height={100}
-                        className="size-24 object-cover object-center rounded-md"
-                      />
-                    )}
-                    <div>
-                      <h3 className="font-semibold text-2xl">{bk.toUsrNm}</h3>
-                      <h4 className="text-sm font-medium text-black">
-                        Status: {bk.status}
-                      </h4>
+                  )}
 
-                      <div className="flex gap-3 mt-2">
-                        <Link
-                          href={`/friends/user/${bk.toUsrId}`}
-                          className="text-orange font-medium"
-                        >
-                          View Profile
-                        </Link>
-
-                        <a
-                          onClick={() => startConversation(i)}
-                          className="text-orange hover:text-black transition cursor-pointer"
-                        >
-                          Message
-                        </a>
-                      </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-slate-900">{friendName}</h3>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
+                        <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Connected Friend
+                      </span>
                     </div>
-                  </>
-                )}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                  <Link
+                    href={`/friends/user/${friendId}`}
+                    className="text-xs font-semibold text-slate-700 hover:text-orange px-3.5 py-2 rounded-lg border border-slate-200 hover:border-orange/40 bg-white transition"
+                  >
+                    View Profile
+                  </Link>
+
+                  <button
+                    onClick={() => startConversation(bk)}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-orange hover:bg-orange/90 px-4 py-2 rounded-lg shadow-sm transition cursor-pointer"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+                    </svg>
+                    Message & Chat
+                  </button>
+                </div>
               </li>
             );
           })}
         </ul>
       )}
-      {myFriends.length == 0 && (
-        <div className="bg-white border border-gray rounded-xl p-6 text-center shadow-sm my-4">
-          <div className="text-4xl mb-2">🇮🇳 👋</div>
-          <h2 className="text-xl font-bold text-black mb-1">
+      {activeFriends.length == 0 && (
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center shadow-sm my-4">
+          <div className="text-4xl mb-3">🇮🇳 👋</div>
+          <h2 className="text-xl font-bold text-slate-900 mb-1">
             Find Your First Friend from India!
           </h2>
-          <p className="text-sm text-darkGray mb-4 max-w-md mx-auto">
+          <p className="text-sm text-slate-600 mb-5 max-w-md mx-auto">
             You haven't connected with friends yet. Connect with fellow Indian students from Telangana, Andhra Pradesh, Maharashtra, Karnataka, Kerala, Gujarat, Tamil Nadu, and more studying in Germany.
           </p>
           <Link
             href="/friends/all/-/-"
-            className="inline-block bg-orange hover:bg-opacity-90 text-white font-semibold px-6 py-2.5 rounded-lg shadow-sm transition text-sm"
+            className="inline-block bg-orange hover:bg-opacity-90 text-white font-semibold px-6 py-2.5 rounded-xl shadow-sm transition text-sm"
           >
             🇮🇳 Explore Indian Students Now
           </Link>
         </div>
       )}
-      {myFriends.length != 0 && (
+      {activeFriends.length != 0 && (
         <div className="text-center mt-6 mb-2">
           <Link
             href="/friends/all/-/-"
-            className="inline-block bg-orange bg-opacity-10 text-orange border border-orange border-opacity-30 hover:bg-orange hover:text-white font-semibold px-5 py-2 rounded-lg transition text-sm"
+            className="inline-block bg-orange/10 text-orange border border-orange/30 hover:bg-orange hover:text-white font-semibold px-5 py-2 rounded-xl transition text-sm"
           >
             + Connect with More Indian Students 🇮🇳
           </Link>

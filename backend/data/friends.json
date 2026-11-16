@@ -20,5 +20,16 @@
     "status": "Accepted",
     "createdAt": "2026-11-16T21:05:30.688Z",
     "_id": "b4bb478e4eb134207535dea1"
+  },
+  {
+    "fromUsrId": "5723b4ab42e0cdecd8ec50db",
+    "fromUsrNm": "Student Stuttgart",
+    "fromUsrImg": "default-avatar.jpg",
+    "toUsrId": "8347045ab27e9196215bd9a9",
+    "toUsrNm": "Ananya Reddy",
+    "toUsrImg": "avatar3.jpg",
+    "status": "Accepted",
+    "createdAt": "2026-11-16T22:47:11.693Z",
+    "_id": "b6b45057381ef5d97a0b4cb2"
   }
 ]

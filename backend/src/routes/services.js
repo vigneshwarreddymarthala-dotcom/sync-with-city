@@ -625,8 +625,13 @@ router.get("/review/:id/0/10", async (req, res) => {
 // -------------------------------------------------------------
 router.get("/conversation/user", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
     const convos = await getCollection("conversations");
-    return res.status(200).json(convos);
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const filtered = userId
+      ? convos.filter(c => c.rId === userId || c.usrId === userId)
+      : convos;
+    return res.status(200).json(filtered);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -636,14 +641,11 @@ router.get("/conversation/user/:id", async (req, res) => {
   try {
     let convo = await findById("conversations", req.params.id);
     if (!convo) {
-      convo = {
-        _id: req.params.id,
-        rId: "organizer-1",
-        rName: "Event Organizer",
-        usrId: "attendee-1",
-        usrName: "Student Attendee",
-        createdAt: new Date().toISOString()
-      };
+      const convos = await getCollection("conversations");
+      convo = convos.find(c => c._id === req.params.id || c.id === req.params.id);
+    }
+    if (!convo) {
+      return res.status(404).json("Conversation not found");
     }
     return res.status(200).json(convo);
   } catch (err) {
@@ -654,6 +656,10 @@ router.get("/conversation/user/:id", async (req, res) => {
 router.get("/conversation/restaurant/:id", async (req, res) => {
   try {
     let convo = await findById("conversations", req.params.id);
+    if (!convo) {
+      const convos = await getCollection("conversations");
+      convo = convos.find(c => c._id === req.params.id || c.id === req.params.id);
+    }
     return res.status(200).json(convo || { _id: req.params.id, rName: "Host" });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -662,8 +668,13 @@ router.get("/conversation/restaurant/:id", async (req, res) => {
 
 router.get("/conversation/restaurant", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
     const convos = await getCollection("conversations");
-    return res.status(200).json(convos);
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const filtered = userId
+      ? convos.filter(c => c.rId === userId || c.usrId === userId)
+      : convos;
+    return res.status(200).json(filtered);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -671,8 +682,28 @@ router.get("/conversation/restaurant", async (req, res) => {
 
 router.post("/conversation/restaurant", async (req, res) => {
   try {
-    const convo = await insertOne("conversations", req.body);
-    return res.status(200).json({ cId: convo._id });
+    const authUser = getAuthUser(req);
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const { usrId, rName, usrName } = req.body;
+    const rId = req.body.rId || userId || "user";
+
+    const convos = await getCollection("conversations");
+    let existing = convos.find(
+      c => (c.rId === rId && c.usrId === usrId) || (c.rId === usrId && c.usrId === rId)
+    );
+
+    if (existing) {
+      return res.status(202).json(existing._id);
+    }
+
+    const convo = await insertOne("conversations", {
+      rId,
+      rName: rName || "Student",
+      usrId,
+      usrName: usrName || "Friend",
+      createdAt: new Date().toISOString()
+    });
+    return res.status(202).json(convo._id);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -682,7 +713,8 @@ router.get("/message/user/:id", async (req, res) => {
   try {
     const msgs = await getCollection("messages");
     const filtered = msgs.filter(m => m.cId === req.params.id);
-    return res.status(200).json(filtered);
+    filtered.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+    return res.status(200).json({ data: filtered });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -692,7 +724,8 @@ router.get("/message/restaurant/:id", async (req, res) => {
   try {
     const msgs = await getCollection("messages");
     const filtered = msgs.filter(m => m.cId === req.params.id);
-    return res.status(200).json(filtered);
+    filtered.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+    return res.status(200).json({ data: filtered });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -700,8 +733,19 @@ router.get("/message/restaurant/:id", async (req, res) => {
 
 router.post("/message/user", async (req, res) => {
   try {
-    const msg = await insertOne("messages", { ...req.body, createdAt: new Date().toISOString() });
-    return res.status(200).json({ message: "Message sent", data: msg });
+    const authUser = getAuthUser(req);
+    const senderId = req.body.senderId || (authUser ? (authUser._id || authUser.id) : null);
+    const msg = await insertOne("messages", {
+      ...req.body,
+      senderId,
+      createdAt: new Date().toISOString()
+    });
+    if (req.body.cId) {
+      await updateOne("conversations", req.body.cId, {
+        lastMsg: new Date().toISOString()
+      });
+    }
+    return res.status(202).json("Message Sent Successfully!");
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -709,8 +753,19 @@ router.post("/message/user", async (req, res) => {
 
 router.post("/message/restaurant", async (req, res) => {
   try {
-    const msg = await insertOne("messages", { ...req.body, createdAt: new Date().toISOString() });
-    return res.status(200).json({ message: "Message sent", data: msg });
+    const authUser = getAuthUser(req);
+    const senderId = req.body.senderId || (authUser ? (authUser._id || authUser.id) : null);
+    const msg = await insertOne("messages", {
+      ...req.body,
+      senderId,
+      createdAt: new Date().toISOString()
+    });
+    if (req.body.cId) {
+      await updateOne("conversations", req.body.cId, {
+        lastMsg: new Date().toISOString()
+      });
+    }
+    return res.status(202).json("Message Sent Successfully!");
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -720,7 +775,15 @@ router.get("/notify/message/user", (req, res) => {
   return res.status(200).json({ count: 0 });
 });
 
+router.put("/notify/message/user", (req, res) => {
+  return res.status(200).json({ count: 0 });
+});
+
 router.get("/notify/message/restaurant", (req, res) => {
+  return res.status(200).json({ count: 0 });
+});
+
+router.put("/notify/message/restaurant", (req, res) => {
   return res.status(200).json({ count: 0 });
 });
 
@@ -729,8 +792,13 @@ router.get("/notify/message/restaurant", (req, res) => {
 // -------------------------------------------------------------
 router.get("/friend/collection/all", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
     const friends = await getCollection("friends");
-    return res.status(200).json({ data: friends });
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const userFriends = userId
+      ? friends.filter(f => f.fromUsrId === userId || f.toUsrId === userId)
+      : friends;
+    return res.status(200).json({ data: userFriends });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -738,8 +806,13 @@ router.get("/friend/collection/all", async (req, res) => {
 
 router.get("/friend/request/all", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
     const requests = await getCollection("friendRequests");
-    return res.status(200).json({ data: requests });
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const myRequests = userId
+      ? requests.filter(r => r.fromUsrId === userId || r.toUsrId === userId)
+      : requests;
+    return res.status(200).json({ data: myRequests });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -747,8 +820,13 @@ router.get("/friend/request/all", async (req, res) => {
 
 router.get("/friend/request/0/50", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
     const requests = await getCollection("friendRequests");
-    return res.status(200).json({ data: requests });
+    const userId = authUser ? (authUser._id || authUser.id) : null;
+    const myRequests = userId
+      ? requests.filter(r => (r.toUsrId === userId || r.toUsrId === authUser.email) && r.status !== "Accepted")
+      : requests;
+    return res.status(200).json({ data: myRequests });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -756,8 +834,11 @@ router.get("/friend/request/0/50", async (req, res) => {
 
 router.post("/friend/request", async (req, res) => {
   try {
+    const authUser = getAuthUser(req);
+    const fromUsrId = req.body.fromUsrId || (authUser ? (authUser._id || authUser.id) : null);
     const fr = await insertOne("friendRequests", {
       ...req.body,
+      fromUsrId,
       status: req.body.status || "Pending",
       createdAt: new Date().toISOString()
     });
@@ -772,16 +853,24 @@ router.put("/friend/request/accept/:id", async (req, res) => {
     await updateOne("friendRequests", req.params.id, { status: "Accepted" });
     const reqDoc = await findById("friendRequests", req.params.id);
     if (reqDoc) {
-      await insertOne("friends", {
-        fromUsrId: reqDoc.fromUsrId,
-        fromUsrNm: reqDoc.fromUsrNm,
-        fromUsrImg: reqDoc.fromUsrImg || "default-avatar.jpg",
-        toUsrId: reqDoc.toUsrId,
-        toUsrNm: reqDoc.toUsrNm,
-        toUsrImg: reqDoc.toUsrImg || "default-avatar.jpg",
-        status: "Accepted",
-        createdAt: new Date().toISOString()
-      });
+      // Check if already in friends collection
+      const friends = await getCollection("friends");
+      const exists = friends.find(
+        f => (f.fromUsrId === reqDoc.fromUsrId && f.toUsrId === reqDoc.toUsrId) ||
+             (f.fromUsrId === reqDoc.toUsrId && f.toUsrId === reqDoc.fromUsrId)
+      );
+      if (!exists) {
+        await insertOne("friends", {
+          fromUsrId: reqDoc.fromUsrId,
+          fromUsrNm: reqDoc.fromUsrNm,
+          fromUsrImg: reqDoc.fromUsrImg || "default-avatar.jpg",
+          toUsrId: reqDoc.toUsrId,
+          toUsrNm: reqDoc.toUsrNm,
+          toUsrImg: reqDoc.toUsrImg || "default-avatar.jpg",
+          status: "Accepted",
+          createdAt: new Date().toISOString()
+        });
+      }
     }
     return res.status(202).json("Friend Request Accepted!");
   } catch (err) {

@@ -49,5 +49,15 @@
     "usrName": "Rahul Verma",
     "_id": "4ad4393013d57c6ad52a6bd2",
     "createdAt": "2026-11-16T22:39:11.486Z"
+  },
+  {
+    "rId": "user",
+    "rName": "Student Stuttgart",
+    "usrId": "4b6a4dfc4ba926126a3e9162",
+    "usrName": "Sai Teja Goud",
+    "createdAt": "2026-11-16T22:47:11.696Z",
+    "_id": "5f32553ac17d4ec69838022b",
+    "lastMsg": "2026-11-16T22:47:11.700Z",
+    "updatedAt": "2026-11-16T22:47:11.700Z"
   }
 ]
