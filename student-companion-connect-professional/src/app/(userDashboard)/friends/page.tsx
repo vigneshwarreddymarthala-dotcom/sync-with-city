@@ -81,6 +81,7 @@ const MyFriends = () => {
           authorization: authToken,
         },
         body: JSON.stringify({
+          rId: myInfo?._id,
           usrId: targetUsrId,
           rName: myInfo?.fullName || "Student",
           usrName: targetUsrNm,

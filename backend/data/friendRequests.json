@@ -54,5 +54,27 @@
     "status": "Pending",
     "createdAt": "2026-11-16T22:47:11.685Z",
     "_id": "2e8f6e6324fcdd1453870314"
+  },
+  {
+    "fromUsrId": "d317b95dfa0392a437a9e0d1",
+    "fromUsrNm": "Karthik Nair",
+    "fromUsrImg": "avatar4.jpg",
+    "toUsrId": "5723b4ab42e0cdecd8ec50db",
+    "toUsrNm": "Student Stuttgart",
+    "toUsrImg": "default-avatar.jpg",
+    "status": "Pending",
+    "createdAt": "2026-11-16T22:57:25.017Z",
+    "_id": "req-karthik-mwjv5vyy"
+  },
+  {
+    "fromUsrId": "5a894a22d6ba8b4ce4da6605",
+    "fromUsrNm": "Sneha Patel",
+    "fromUsrImg": "avatar1.jpg",
+    "toUsrId": "5723b4ab42e0cdecd8ec50db",
+    "toUsrNm": "Student Stuttgart",
+    "toUsrImg": "default-avatar.jpg",
+    "status": "Pending",
+    "createdAt": "2026-11-16T22:57:25.018Z",
+    "_id": "req-sneha-mwjv5vyy"
   }
 ]
