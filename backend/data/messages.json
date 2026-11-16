@@ -37,5 +37,13 @@
     "message": "Namaste! Thank you so much, let us catch up at the campus cafeteria!",
     "createdAt": "2026-11-16T22:47:11.700Z",
     "_id": "c8daa9b0cb61a34d1463ed96"
+  },
+  {
+    "message": "Please join the call by following link: <a href=\"https://syncwithcity.daily.co/DYR53plLbHERCgZFEy9E\" target=\"_blank\">Join Call</a>",
+    "senderName": "Student Stuttgart",
+    "cId": "5f32553ac17d4ec69838022b",
+    "senderId": "5723b4ab42e0cdecd8ec50db",
+    "createdAt": "2026-11-16T23:25:09.676Z",
+    "_id": "9950c75d57893bbf80480630"
   }
 ]

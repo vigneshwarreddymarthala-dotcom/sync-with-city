@@ -287,9 +287,10 @@ router.get("/user/session", (req, res) => {
 });
 
 // Upload User File/Image
-router.post("/user/upload", upload.single("file"), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
-  return res.status(200).json({ filename: req.file.filename, url: `/uploads/${req.file.filename}` });
+router.post("/user/upload", upload.any(), (req, res) => {
+  const file = req.files && req.files.length > 0 ? req.files[0] : req.file;
+  if (!file) return res.status(400).json({ error: "No file uploaded" });
+  return res.status(200).json(file.filename);
 });
 
 module.exports = router;
